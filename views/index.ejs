@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog</title>
+  <!-- Thêm link CSS của Bootstrap -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+      <a class="navbar-brand" href="/">HungDevhehe</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+  
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+          <% if (!user) { %> 
+            <li class="nav-item">
+              <a class="nav-link" href="/login">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/register">Register</a>
+            </li>
+          <% } else { %>
+            <li class="nav-item">
+              <span class="navbar-text">Chào <b><%= user.email %></b></span>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/create_post">Create Post</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/user/<%= user._id %>/posts">My Posts</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link"  onclick="logout()">Logout</a>
+            </li>
+          <% } %>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  
+  <div class="container mt-5">
+    <h1>Latest Posts</h1>
+    <ul class="list-group mt-3">
+      <% posts.forEach(post => { %>
+        <li class="list-group-item"><a href="/post/<%= post._id %>"><%= post.title %></a></li>
+        <span class="text-muted">by <%= post.author %></span>
+      <% }) %>
+    </ul>
+  </div>
+  <script>
+    function logout() {
+      fetch('/logout', {
+        method: 'POST'
+      })
+      .then(response => {
+        if (response.ok) {
+            window.location.href = "/";
+        } else {
+          console.error('Logout failed');
+        }
+      })
+      .catch(error => console.error('Error during logout:', error));
+    }
+  </script>
+  <!-- Thêm script của Bootstrap (nếu cần) -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

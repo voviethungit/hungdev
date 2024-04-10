@@ -1,0 +1,27 @@
+<!-- views/create_post.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Post</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <h1 class="mt-5">Create Post</h1>
+    <form action="/post" method="post">
+      <div class="form-group">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label for="content">Content:</label>
+        <textarea id="content" name="content" class="form-control" rows="5" required></textarea>
+      </div>
+      <input type="hidden" name="userId" value="<%= userId %>" class="form-control">
+      <button type="submit" class="btn btn-primary">Create Post</button>
+    </form>
+  </div>
+</body>
+</html>
